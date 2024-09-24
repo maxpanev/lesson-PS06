@@ -17,30 +17,28 @@ time.sleep(3)
 
 # Находим все карточки с вакансиями с помощью названия класса
 # Названия классов берём с кода сайта
-divans = driver.find_elements(By.CLASS_NAME, 'vacancy-card--H8LvOiOGPll0jZvYpxIF')
+divans = driver.find_elements(By.CLASS_NAME, '')
 
 
 
 # Выводим вакансии на экран
 print(divans)
 # Создаём список, в который потом всё будет сохраняться
-parsed_data = []
+my_list = []
 
 
 
 # Перебираем коллекцию вакансий
 # Используем конструкцию try-except, чтобы "ловить" ошибки, как только они появляются
-for vacancy in divans:
+for divan in divans:
    try:
    # Находим элементы внутри вакансий по значению
-   # Находим названия вакансии
-     title = vacancy.find_element(By.CSS_SELECTOR, 'span.vacancy-name--SYbxrgpHgHedVTkgI_cA').text
-     # Находим названия компаний
-     company = vacancy.find_element(By.CSS_SELECTOR, 'span.company-info-text--O32pGCRW0YDmp3BHuNOP').text
-     # Находим зарплаты
-     salary = vacancy.find_element(By.CSS_SELECTOR, 'span.compensation-text--cCPBXayRjn5GuLFWhGTJ').text
+   # Находим название
+     name = divan.find_element(By.CSS_SELECTOR, 'span.vacancy-name--SYbxrgpHgHedVTkgI_cA').text
+     # Находим цену
+     price = divan.find_element(By.CSS_SELECTOR, 'span.company-info-text--O32pGCRW0YDmp3BHuNOP').text
      # Находим ссылку с помощью атрибута 'href'
-     link = vacancy.find_element(By.CSS_SELECTOR, 'a.bloko-link').get_attribute('href')
+     url = divan.find_element(By.CSS_SELECTOR, 'a.bloko-link').get_attribute('href')
    # Вставляем блок except на случай ошибки - в случае ошибки программа попытается продолжать
    except:
      print("произошла ошибка при парсинге")
@@ -49,7 +47,7 @@ for vacancy in divans:
 
 
 # Вносим найденную информацию в список
-parsed_data.append([title, company, salary, link])
+my_list.append([name, price, url])
 
 
 
@@ -65,7 +63,7 @@ with open("hh.csv", 'w',newline='', encoding='utf-8') as file:
 # Создаём объект
 writer = csv.writer(file)
 # Создаём первый ряд
-writer.writerow(['Название вакансии', 'название компании', 'зарплата', 'ссылка на вакансию'])
+writer.writerow(['Название', 'Цена', 'Ссылка'])
 
 # Прописываем использование списка как источника для рядов таблицы
-writer.writerows(parsed_data)
+writer.writerows(my_list)
