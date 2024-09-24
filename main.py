@@ -17,7 +17,7 @@ time.sleep(3)
 
 # Находим все карточки с вакансиями с помощью названия класса
 # Названия классов берём с кода сайта
-divans = driver.find_elements(By.CLASS_NAME, '')
+divans = driver.find_elements(By.CLASS_NAME, 'LlPhw')
 
 
 
@@ -34,11 +34,11 @@ for divan in divans:
    try:
    # Находим элементы внутри вакансий по значению
    # Находим название
-     name = divan.find_element(By.CSS_SELECTOR, 'span.vacancy-name--SYbxrgpHgHedVTkgI_cA').text
+     name = divan.find_element(By.CSS_SELECTOR, 'div.lsooF').text
      # Находим цену
-     price = divan.find_element(By.CSS_SELECTOR, 'span.company-info-text--O32pGCRW0YDmp3BHuNOP').text
+     price = divan.find_element(By.CSS_SELECTOR, 'div.pY3d2').text
      # Находим ссылку с помощью атрибута 'href'
-     url = divan.find_element(By.CSS_SELECTOR, 'a.bloko-link').get_attribute('href')
+     #url = divan.find_element(By.CSS_SELECTOR, 'a.').get_attribute('href')
    # Вставляем блок except на случай ошибки - в случае ошибки программа попытается продолжать
    except:
      print("произошла ошибка при парсинге")
@@ -47,7 +47,7 @@ for divan in divans:
 
 
 # Вносим найденную информацию в список
-my_list.append([name, price, url])
+my_list.append([name, price])
 
 
 
@@ -58,12 +58,11 @@ driver.quit()
 
 # Прописываем открытие нового файла, задаём ему название и форматирование
 # 'w' означает режим доступа, мы разрешаем вносить данные в таблицу
-with open("hh.csv", 'w',newline='', encoding='utf-8') as file:
-# Используем модуль csv и настраиваем запись данных в виде таблицы
+with open("homework.csv", 'w',newline='', encoding='utf-8') as file:
 # Создаём объект
-writer = csv.writer(file)
+    writer = csv.writer(file)
 # Создаём первый ряд
-writer.writerow(['Название', 'Цена', 'Ссылка'])
+    writer.writerow(['Название', 'Цена', 'Ссылка'])
 
 # Прописываем использование списка как источника для рядов таблицы
 writer.writerows(my_list)
