@@ -20,7 +20,7 @@ for divan in divans:
     try:
         name = divan.find_element(By.CSS_SELECTOR, 'span[itemprop="name"]').text
         price = divan.find_element(By.CSS_SELECTOR, 'span.ui-LD-ZU').text
-        my_list.append([name, price])  # Перенесено внутрь цикла
+        my_list.append([name, price])
     except NoSuchElementException:
         print("Произошла ошибка при парсинге")
         continue
@@ -30,4 +30,4 @@ driver.quit()
 with open("homework.csv", 'w', newline='', encoding='utf-8') as file:
     writer = csv.writer(file)
     writer.writerow(['Название', 'Цена'])
-    writer.writerows(my_list)  # Перенесено внутрь блока с открытием файла
+    writer.writerows(my_list)
